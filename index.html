@@ -65,7 +65,7 @@
         .flip-card-front h1 {
             font-family: 'Parisienne', cursive; /* Fuente elegante para el nombre */
             font-size: 2.8rem;
-            color: #fde047; /* Dorado cálido */
+            color: #fde047; /* Dorado cálido (Tailwind: yellow-300) */
             margin-bottom: 10px;
             text-shadow: 0 0 10px rgba(253, 224, 71, 0.5);
         }
@@ -88,8 +88,8 @@
         }
         .flip-card-front .click-prompt:hover {
             background-color: rgba(253, 224, 71, 0.1);
-            color: #fde047;
-            border-color: #fde047;
+            color: #fde047; /* Tailwind: yellow-300 */
+            border-color: #fde047; /* Tailwind: yellow-300 */
         }
 
         /* Decoración de estrellas en la parte frontal */
@@ -236,7 +236,7 @@
                 <div class="relative z-10 flex flex-col items-center justify-center h-full">
                     <p class="birthday-wish">Un deseo de cumpleaños para</p>
                     <h1>Ingrid Patricia</h1>
-                    <img src="https://placehold.co/100x100/transparent/FDE047?text=🌙" alt="[Icono de Luna y Estrellas]" class="my-6 opacity-80" />
+                    <span class="my-6 text-7xl text-yellow-300 opacity-80" aria-label="Icono de Luna y Estrellas">🌙</span>
                     <p class="click-prompt animate-pulse">Descubre tu mensaje</p>
                 </div>
             </div>
