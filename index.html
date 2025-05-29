@@ -1,184 +1,106 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarjeta de Cumpleaños</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5; /* Un gris claro para el fondo */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .card-container {
-            perspective: 1000px; /* Para el efecto 3D al abrir la tarjeta */
-        }
-        .birthday-card {
-            width: 320px; /* Ancho de la tarjeta */
-            height: 450px; /* Alto de la tarjeta */
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.8s; /* Transición suave para la apertura */
-            border-radius: 16px; /* Bordes redondeados para la tarjeta */
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Sombra suave */
-            cursor: pointer; /* Indica que es interactiva */
-        }
-        .birthday-card.open {
-            transform: rotateY(180deg); /* Gira la tarjeta al abrirla */
-        }
-        .card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden; /* Oculta la parte trasera de las caras */
-            backface-visibility: hidden;
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .front-face {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%); /* Degradado cálido */
-            color: white;
-            z-index: 2;
-        }
-        .back-face {
-            background-color: #ffffff; /* Fondo blanco para el interior */
-            color: #333;
-            transform: rotateY(180deg); /* Gira la cara trasera para que se vea al abrir */
-            justify-content: flex-start; /* Alinea el contenido arriba */
-            padding-top: 40px;
-        }
-        .icon {
-            font-size: 6rem; /* Tamaño grande para el icono */
-            margin-bottom: 20px;
-        }
-        .message-box {
-            background-color: #fefce8; /* Un amarillo muy claro para el cuadro de mensaje */
-            border: 1px solid #fde047; /* Borde amarillo */
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 20px;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            color: #713f12; /* Color de texto oscuro para contraste */
-            max-height: 200px; /* Altura máxima para el mensaje */
-            overflow-y: auto; /* Permite desplazamiento si el mensaje es largo */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: #f06; /* Color de confeti */
-            border-radius: 50%;
-            animation: confetti-fall 3s ease-out forwards;
-            opacity: 0;
-            z-index: 10;
-        }
-
-        @keyframes confetti-fall {
-            0% {
-                transform: translateY(-100px) rotateZ(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(500px) rotateZ(720deg);
-                opacity: 0;
-            }
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            .birthday-card {
-                width: 280px;
-                height: 400px;
-            }
-            .icon {
-                font-size: 5rem;
-            }
-            .front-face h1 {
-                font-size: 1.8rem;
-            }
-            .front-face p {
-                font-size: 1rem;
-            }
-            .back-face h2 {
-                font-size: 1.5rem;
-            }
-            .message-box {
-                font-size: 0.85rem;
-                padding: 10px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarjeta de Cumpleaños</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffe6f0, #e6f7ff);
+      font-family: 'Arial', sans-serif;
+    }
+    .flip-card {
+      background-color: transparent;
+      width: 300px;
+      height: 400px;
+      perspective: 1000px;
+    }
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .flip-card-front {
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .flip-card-front img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    .flip-card-front h2 {
+      margin-top: 15px;
+      font-size: 20px;
+      color: #cc0066;
+    }
+    .flip-card-back {
+      background-color: #fff5f8;
+      color: #333;
+      transform: rotateY(180deg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .flip-card-back img {
+      width: 80px;
+      margin-bottom: 20px;
+    }
+    .flip-card-back p {
+      font-size: 16px;
+      font-weight: 500;
+    }
+    audio {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-    <div class="card-container">
-        <div id="birthdayCard" class="birthday-card">
-            <div class="card-face front-face">
-                <div class="icon">🎂</div> <h1 class="text-4xl font-bold mb-2">¡Feliz Cumpleaños!</h1>
-                <p class="text-lg">Toca para abrir</p>
-            </div>
 
-            <div class="card-face back-face">
-                <h2 class="text-2xl font-bold text-pink-600 mb-4">¡Feliz Cumpleaños, Ingrid Patricia!</h2>
-                <div class="message-box w-full max-w-xs">
-                    <p id="birthdayMessage">
-                        ¡Te deseo un día lleno de alegría, risas y todo lo que te haga feliz! Que este nuevo año de vida te traiga muchas bendiciones y éxitos. ¡Disfruta mucho de tu día especial! Un caluroso abrazo desde la distancia.
-                    </p>
-                </div>
-                <p class="mt-4 text-sm text-gray-500">Con cariño, Rafa</p>
-            </div>
-        </div>
+<audio autoplay loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-smile.mp3" type="audio/mp3">
+  Tu navegador no soporta la reproducción de audio.
+</audio>
+
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+      <img src="https://raw.githubusercontent.com/tu_usuario/tu_repositorio/main/101121226_3177985145557399_7169076221261643776_n.jpeg" alt="Ingrid Patricia">
+      <h2>¡Feliz Cumpleaños Ingrid Patricia!</h2>
     </div>
+    <div class="flip-card-back">
+      <img src="https://cdn-icons-png.flaticon.com/512/3468/3468376.png" alt="Pastel de Cumpleaños">
+      <p>Hoy celebramos la vida de una mujer maravillosa, cuyo corazón ilumina a quienes la rodean. Que este nuevo año de vida esté lleno de alegrías, sueños cumplidos y momentos inolvidables. ¡Feliz cumpleaños con todo mi cariño!</p>
+    </div>
+  </div>
+</div>
 
-    <script>
-        const birthdayCard = document.getElementById('birthdayCard');
-        const birthdayMessage = document.getElementById('birthdayMessage');
-        const cardContainer = document.querySelector('.card-container');
-
-        // Función para generar confeti
-        function createConfetti() {
-            const confetti = document.createElement('div');
-            confetti.classList.add('confetti');
-            confetti.style.left = Math.random() * 100 + 'vw'; /* Posición horizontal aleatoria */
-            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`; /* Color aleatorio */
-            confetti.style.animationDuration = (Math.random() * 2 + 2) + 's'; /* Duración de animación aleatoria */
-            confetti.style.animationDelay = Math.random() * 0.5 + 's'; /* Retraso de animación aleatorio */
-            document.body.appendChild(confetti);
-
-            // Eliminar el confeti después de que termine la animación
-            confetti.addEventListener('animationend', () => {
-                confetti.remove();
-            });
-        }
-
-        // Event listener para abrir/cerrar la tarjeta y generar confeti
-        birthdayCard.addEventListener('click', () => {
-            birthdayCard.classList.toggle('open');
-            if (birthdayCard.classList.contains('open')) {
-                // Generar confeti al abrir la tarjeta
-                for (let i = 0; i < 50; i++) {
-                    createConfetti();
-                }
-            }
-        });
-
-        // Puedes cambiar el mensaje aquí si lo deseas
-        // birthdayMessage.textContent = "¡Personaliza tu mensaje aquí!";
-    </script>
 </body>
 </html>
