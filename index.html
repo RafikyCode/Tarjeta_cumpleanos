@@ -1,106 +1,347 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tarjeta de Cumpleaños</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: linear-gradient(135deg, #ffe6f0, #e6f7ff);
-      font-family: 'Arial', sans-serif;
-    }
-    .flip-card {
-      background-color: transparent;
-      width: 300px;
-      height: 400px;
-      perspective: 1000px;
-    }
-    .flip-card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      text-align: center;
-      transition: transform 0.8s;
-      transform-style: preserve-3d;
-    }
-    .flip-card:hover .flip-card-inner {
-      transform: rotateY(180deg);
-    }
-    .flip-card-front, .flip-card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    .flip-card-front {
-      background-color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .flip-card-front img {
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-    }
-    .flip-card-front h2 {
-      margin-top: 15px;
-      font-size: 20px;
-      color: #cc0066;
-    }
-    .flip-card-back {
-      background-color: #fff5f8;
-      color: #333;
-      transform: rotateY(180deg);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    .flip-card-back img {
-      width: 80px;
-      margin-bottom: 20px;
-    }
-    .flip-card-back p {
-      font-size: 16px;
-      font-weight: 500;
-    }
-    audio {
-      display: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumpleaños Ingrid Patricia! - Diseño Estrellado</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Quicksand:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1f2937 0%, #374151 100%); /* Fondo oscuro general */
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .perspective-container {
+            perspective: 1500px;
+        }
+
+        .flip-card {
+            width: 360px;
+            height: 520px;
+            max-width: 90vw;
+            max-height: 75vh;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Transición más suave */
+            transform-style: preserve-3d;
+            border-radius: 25px; /* Bordes más redondeados */
+        }
+
+        .flip-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 25px;
+            overflow: hidden;
+        }
+
+        /* --- TARJETA FRONTAL --- */
+        .flip-card-front {
+            background: linear-gradient(160deg, #0f172a 0%, #1e293b 50%, #334155 100%); /* Azul noche profundo */
+            color: #e5e7eb; /* Plata claro */
+            border: 2px solid rgba(209, 213, 219, 0.3); /* Borde sutil */
+        }
+
+        .flip-card-front h1 {
+            font-family: 'Parisienne', cursive; /* Fuente elegante para el nombre */
+            font-size: 2.8rem;
+            color: #fde047; /* Dorado cálido */
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(253, 224, 71, 0.5);
+        }
+        
+        .flip-card-front .birthday-wish {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 500;
+            font-size: 1.3rem;
+            color: #d1d5db; /* Gris claro */
+            margin-bottom: 25px;
+        }
+
+        .flip-card-front .click-prompt {
+            font-size: 0.9rem;
+            color: #9ca3af; /* Gris medio */
+            border: 1px solid #9ca3af;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .flip-card-front .click-prompt:hover {
+            background-color: rgba(253, 224, 71, 0.1);
+            color: #fde047;
+            border-color: #fde047;
+        }
+
+        /* Decoración de estrellas en la parte frontal */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 80px; /* Largo de la estela */
+            background: linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(255,255,255,0));
+            border-radius: 50%;
+            animation: shoot 3s linear infinite;
+            opacity: 0;
+        }
+        .shooting-star:nth-child(1) { top: 20%; left: -10%; animation-delay: 0s; transform: rotate(-45deg); }
+        .shooting-star:nth-child(2) { top: 50%; left: -15%; animation-delay: 1.5s; transform: rotate(-50deg); width: 1.5px; height: 60px;}
+        .shooting-star:nth-child(3) { top: 10%; right: -10%; animation-delay: 0.8s; transform: rotate(135deg); }
+
+
+        @keyframes shoot {
+            0% { transform: translateX(0) translateY(0) rotate(-45deg); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateX(200px) translateY(200px) rotate(-45deg); opacity: 0; } /* Ajustar para que atraviese la tarjeta */
+        }
+        
+        .static-stars {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+        }
+        .static-star {
+            position: absolute;
+            background-color: #f0f9ff; /* Estrellas blancas/azuladas */
+            border-radius: 50%;
+            animation: twinkle-subtle 4s infinite ease-in-out;
+        }
+        /* Generar estrellas estáticas con JS para variedad */
+
+
+        @keyframes twinkle-subtle {
+            0%, 100% { opacity: 0.4; transform: scale(0.8); }
+            50% { opacity: 0.8; transform: scale(1); }
+        }
+
+
+        /* --- TARJETA TRASERA --- */
+        .flip-card-back {
+            background: linear-gradient(160deg, #e0e7ff 0%, #c7d2fe 100%); /* Lavanda muy claro */
+            color: #374151; /* Gris oscuro para texto */
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-back h2 {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: #4f46e5; /* Indigo */
+            margin-bottom: 15px;
+        }
+
+        .flip-card-back p.message-paragraph {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #4b5563; /* Gris medio-oscuro */
+        }
+        
+        .flip-card-back .signature {
+            font-family: 'Parisienne', cursive;
+            font-size: 1.8rem;
+            color: #db2777; /* Rosa fuerte */
+            margin-top: 20px;
+        }
+
+        /* --- CONFETI --- */
+        #confetti-container {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .confetti-particle {
+            position: absolute;
+            opacity: 0;
+            animation: fall-elegant 3.5s cubic-bezier(0.1, 0.5, 0.5, 1) forwards; /* Caída más elegante */
+        }
+        /* Formas de confeti: tiras y círculos */
+        .confetti-particle.strip { width: 4px; height: 15px; }
+        .confetti-particle.circle { width: 8px; height: 8px; border-radius: 50%; }
+
+
+        @keyframes fall-elegant {
+            0% {
+                transform: translateY(-15vh) rotateZ(0deg) rotateX(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(115vh) rotateZ(360deg) rotateX(180deg); /* Añadido rotación en X */
+                opacity: 0;
+            }
+        }
+        
+        .message-content {
+             max-height: 60%; 
+             overflow-y: auto; 
+             padding-right: 10px; 
+             margin-bottom: 10px; 
+             scrollbar-width: thin;
+             scrollbar-color: #a5b4fc #e0e7ff;
+        }
+        .message-content::-webkit-scrollbar { width: 6px; }
+        .message-content::-webkit-scrollbar-track { background: #e0e7ff; border-radius: 3px;}
+        .message-content::-webkit-scrollbar-thumb { background-color: #a5b4fc; border-radius: 3px;}
+
+
+        @media (max-width: 400px) {
+            .flip-card { width: 320px; height: 480px; }
+            .flip-card-front h1 { font-size: 2.2rem; }
+            .flip-card-front .birthday-wish { font-size: 1.1rem; }
+            .flip-card-back h2 { font-size: 1.4rem; }
+            .flip-card-back p.message-paragraph { font-size: 0.85rem; }
+            .flip-card-back .signature { font-size: 1.6rem; }
+        }
+         @media (max-height: 550px) {
+            .flip-card { height: 80vh; }
+            .flip-card-front h1 { font-size: 2rem; }
+        }
+
+    </style>
 </head>
 <body>
+    <div class="perspective-container">
+        <div class="flip-card" id="birthdayCardV2">
+            <div class="flip-card-front">
+                <div class="static-stars" id="staticStarsContainer">
+                    </div>
+                <div class="shooting-star"></div>
+                <div class="shooting-star"></div>
+                <div class="shooting-star"></div>
 
-<audio autoplay loop>
-  <source src="https://www.bensound.com/bensound-music/bensound-smile.mp3" type="audio/mp3">
-  Tu navegador no soporta la reproducción de audio.
-</audio>
+                <div class="relative z-10 flex flex-col items-center justify-center h-full">
+                    <p class="birthday-wish">Un deseo de cumpleaños para</p>
+                    <h1>Ingrid Patricia</h1>
+                    <img src="https://placehold.co/100x100/transparent/FDE047?text=🌙" alt="[Icono de Luna y Estrellas]" class="my-6 opacity-80" />
+                    <p class="click-prompt animate-pulse">Descubre tu mensaje</p>
+                </div>
+            </div>
 
-<div class="flip-card">
-  <div class="flip-card-inner">
-    <div class="flip-card-front">
-      <img src="https://raw.githubusercontent.com/tu_usuario/tu_repositorio/main/101121226_3177985145557399_7169076221261643776_n.jpeg" alt="Ingrid Patricia">
-      <h2>¡Feliz Cumpleaños Ingrid Patricia!</h2>
+            <div class="flip-card-back">
+                <div id="confetti-container"></div>
+                <div class="relative z-20 p-2 w-full h-full flex flex-col justify-center items-center"> 
+                    <h2>Un Mensaje Especial:</h2>
+                    <div class="message-content">
+                        <p class="message-paragraph">En tu día especial, mi corazón celebra tu vida. Eres luz y color, la melodía de los momentos simples y un abrazo cálido al alma.</p>
+                        <p class="message-paragraph">Deseo que el universo te regale felicidad, que tus sueños florezcan y la vida te sorprenda con magia. ¡Feliz Cumpleaños, querida Ingrid Patricia!</p>
+                    </div>
+                    <p class="signature">Te quiero Mucho, Rafa</p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="flip-card-back">
-      <img src="https://cdn-icons-png.flaticon.com/512/3468/3468376.png" alt="Pastel de Cumpleaños">
-      <p>Hoy celebramos la vida de una mujer maravillosa, cuyo corazón ilumina a quienes la rodean. Que este nuevo año de vida esté lleno de alegrías, sueños cumplidos y momentos inolvidables. ¡Feliz cumpleaños con todo mi cariño!</p>
-    </div>
-  </div>
-</div>
 
+    <script>
+        const card_v2 = document.getElementById('birthdayCardV2');
+        const confettiContainer_v2 = document.getElementById('confetti-container');
+        const staticStarsContainer_v2 = document.getElementById('staticStarsContainer');
+        let isFlipped_v2 = false;
+        let confettiLaunched_v2 = false;
+
+        // --- Generar estrellas estáticas en la parte frontal ---
+        function createStaticStars() {
+            const numberOfStars = 50; // Cantidad de estrellas estáticas
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('static-star');
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.left = `${Math.random() * 100}%`;
+                const size = Math.random() * 2 + 1; // Tamaño entre 1px y 3px
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.animationDelay = `${Math.random() * 4}s`; // Retraso aleatorio para parpadeo
+                staticStarsContainer_v2.appendChild(star);
+            }
+        }
+        createStaticStars();
+
+
+        card_v2.addEventListener('click', () => {
+            isFlipped_v2 = !isFlipped_v2;
+            card_v2.classList.toggle('flipped');
+            if (isFlipped_v2 && !confettiLaunched_v2) {
+                setTimeout(launchConfetti_v2, 400); // Pequeño retraso para la animación de flip
+                confettiLaunched_v2 = true; 
+            } else if (!isFlipped_v2) {
+                // Opcional: resetear confeti si se vuelve a girar
+                // confettiLaunched_v2 = false; 
+                // clearConfetti_v2();
+            }
+        });
+
+        function launchConfetti_v2() {
+            const confettiCount = 120; 
+            // Colores de confeti para el tema estrellado: dorados, plateados, azules profundos
+            const colors = ['#fde047', '#e5e7eb', '#60a5fa', '#a78bfa', '#f472b6']; 
+            
+            for (let i = 0; i < confettiCount; i++) {
+                createConfettiParticle_v2(colors);
+            }
+        }
+
+        function createConfettiParticle_v2(colors) {
+            const particle = document.createElement('div');
+            particle.classList.add('confetti-particle');
+            
+            // Alternar entre tiras y círculos
+            if (Math.random() > 0.5) {
+                particle.classList.add('strip');
+            } else {
+                particle.classList.add('circle');
+            }
+            
+            particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            particle.style.left = `${Math.random() * 100}%`;
+            // Iniciar un poco más arriba para una mejor dispersión inicial
+            particle.style.top = `${Math.random() * -25 - 5}%`; 
+
+            // Variaciones para una caída más natural
+            particle.style.animationDelay = `${Math.random() * 0.3}s`; 
+            const fallDuration = Math.random() * 1.5 + 2.5; // Duración entre 2.5s y 4s
+            particle.style.animationDuration = `${fallDuration}s`;
+            // Rotación inicial aleatoria para las tiras
+            if (particle.classList.contains('strip')) {
+                particle.style.transform = `rotate(${Math.random() * 360}deg)`;
+            }
+
+
+            confettiContainer_v2.appendChild(particle);
+
+            particle.addEventListener('animationend', () => {
+                particle.remove();
+            });
+        }
+
+        // function clearConfetti_v2() {
+        //     while (confettiContainer_v2.firstChild) {
+        //         confettiContainer_v2.removeChild(confettiContainer_v2.firstChild);
+        //     }
+        // }
+    </script>
 </body>
 </html>
